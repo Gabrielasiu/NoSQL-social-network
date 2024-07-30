@@ -4,7 +4,7 @@ const { ObjectId } = require('mongoose').Types;
 const createThoughts = ('../routes/api/thoughtsRoute');
 
 module.exports = {
-  // Get all THOUGTHS
+  // Get all THOUGHTS
   async getThoughts(req, res) {
     try {
       const thoughtsData = await Thought.find();
@@ -38,7 +38,33 @@ module.exports = {
         res.status(500).json(err);
         console.log("error:", err);
       }
-    }
+    },
+
+    //add reaction
+    async addReaction(req, res) {
+   console.log("addreaction")
+      try {
+        const reaction = await Thought.findOneAndUpdate(
+          { _id: req.params.thoughtId },
+          { $addToSet: { reactions: req.body }},
+          { runValidators: true, new: true }
+        );
+        console.log(reaction);
+        console.log(req.body);
+  
+    
+        if (!reaction) {
+          return res
+            .status(404)
+            .json({ message: 'No thought found with that ID :(' });
+        }
+  
+        res.json(reaction);
+      } catch (err) {
+        console.log("err;", err)
+        res.status(500).json(err);
+      }
+    }};
 //   // Delete a course
 //   async deleteCourse(req, res) {
 //     try {
@@ -72,4 +98,4 @@ module.exports = {
 //       res.status(500).json(err);
 //     }
 //   },
- };
+ 
