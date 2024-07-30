@@ -3,7 +3,7 @@ const { ObjectId } = require('mongoose').Types;
 const { User } = require('../models/user');
 const getSingleUser = ('../routes/api/userRoute');
 const createUser = ('../routes/api/userRoute');
-
+const addFriend = ('../routes/api/userRoute');
 
 module.exports = {
   // Get all USERS
@@ -45,7 +45,7 @@ module.exports = {
       res.status(500).json(err);
       console.log("error:", err);
     }
-  }};
+  },
 //   // Delete a student and remove them from the course
 //   async deleteStudent(req, res) {
 //     try {
@@ -74,29 +74,29 @@ module.exports = {
 //     }
 //   },
 
-//   // Add an assignment to a student
-//   async addAssignment(req, res) {
-//     console.log('You are adding an assignment');
-//     console.log(req.body);
+//   // Add a friend to a user
+  async addFriend(req, res) {
+   
+    try {
+      const friend = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $addToSet: { friends: req.params.friendsId } },
+        { runValidators: true, new: true }
+      );
+      console.log(friend);
+      console.log(req.body);
+  
+      if (!friend) {
+        return res
+          .status(404)
+          .json({ message: 'No friend found with that ID :(' });
+      }
 
-//     try {
-//       const student = await Student.findOneAndUpdate(
-//         { _id: req.params.studentId },
-//         { $addToSet: { assignments: req.body } },
-//         { runValidators: true, new: true }
-//       );
-
-//       if (!student) {
-//         return res
-//           .status(404)
-//           .json({ message: 'No student found with that ID :(' });
-//       }
-
-//       res.json(student);
-//     } catch (err) {
-//       res.status(500).json(err);
-//     }
-//   },
+      res.json(friend);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }};
 //   // Remove assignment from a student
 //   async removeAssignment(req, res) {
 //     try {

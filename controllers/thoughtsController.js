@@ -1,15 +1,19 @@
-// const { Course, Student } = require('../models');
+const { Thought } = require('../models');
+const mongoose = require('mongoose');
+const { ObjectId } = require('mongoose').Types;
+const createThoughts = ('../routes/api/thoughtsRoute');
 
-// module.exports = {
-//   // Get all THOUGTHS
-//   async getCourses(req, res) {
-//     try {
-//       const courses = await Course.find().populate('students');
-//       res.json(courses);
-//     } catch (err) {
-//       res.status(500).json(err);
-//     }
-//   },
+module.exports = {
+  // Get all THOUGTHS
+  async getThoughts(req, res) {
+    try {
+      const thoughtsData = await Thought.find();
+      res.status(200).json(thoughtsData);
+    } catch (err) {
+      res.status(500).json(err);
+      console.log("err", err);
+    }
+  },
 //   // Get a course
 //   async getSingleCourse(req, res) {
 //     try {
@@ -25,16 +29,16 @@
 //       res.status(500).json(err);
 //     }
 //   },
-//   // Create a course
-//   async createCourse(req, res) {
-//     try {
-//       const course = await Course.create(req.body);
-//       res.json(course);
-//     } catch (err) {
-//       console.log(err);
-//       return res.status(500).json(err);
-//     }
-//   },
+//   // Create a thought
+    async createThoughts(req, res) {
+    try {
+        const thoughtData = await Thought.create(req.body);
+        res.json(thoughtData);
+      } catch (err) {
+        res.status(500).json(err);
+        console.log("error:", err);
+      }
+    }
 //   // Delete a course
 //   async deleteCourse(req, res) {
 //     try {
@@ -68,4 +72,4 @@
 //       res.status(500).json(err);
 //     }
 //   },
-// };
+ };
