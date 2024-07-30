@@ -34,20 +34,21 @@ module.exports = {
 
       res.json({
         user,
-        userName: await userName(req.params.userName),
+        userName: await userName(req.body.userName),
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
     }
   },
-  // create a new student
+  // create a new user
   async createUser(req, res) {
     try {
-      const userData = await User.create(req.params.userName);
+      const userData = await User.create(req.body );
       res.json(userData);
     } catch (err) {
       res.status(500).json(err);
+      console.log("error:", err);
     }
   }};
 //   // Delete a student and remove them from the course
