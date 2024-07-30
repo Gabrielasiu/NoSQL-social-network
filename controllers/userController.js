@@ -4,28 +4,23 @@ const { User } = require('../models/user');
 const getSingleUser = ('../routes/api/userRoute');
 const createUser = ('../routes/api/userRoute');
 
+
 module.exports = {
   // Get all USERS
-  // async User(req, res) {
-  //   try {
-  //     const user = await User.find();
-
-  //     const studentObj = {
-  //       user,
-  //       headCount: await headCount(),
-  //     };
-
-  //     res.json(studentObj);
-  //   } catch (err) {
-  //     console.log(err);
-  //     return res.status(500).json(err);
-  //   }
-  // },
+  async getUsers(req, res) {
+    try {
+      const user = await User.find();
+      res.status(200).json(user);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+  },
   // Get a single user
   async getSingleUser(req, res) {
     try {
-      const userId = mongoose.Types.ObjectId(req.params.userId);
-      const user = await User.findOne({ _id: userId })
+      //const userId = mongoose.Types(req.params.userId);
+      const user = await User.findOne({ _id:req.params.userId })
         .select('-__v');
 
       if (!user) {
@@ -44,7 +39,7 @@ module.exports = {
   // create a new user
   async createUser(req, res) {
     try {
-      const userData = await User.create(req.body );
+      const userData = await User.create(req.body);
       res.json(userData);
     } catch (err) {
       res.status(500).json(err);
