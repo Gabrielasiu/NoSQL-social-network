@@ -29,7 +29,7 @@ module.exports = {
 
       res.json({
         user,
-        userName: await userName(req.body.userName),
+        userName: await User(req.body.userName),
       });
     } catch (err) {
       console.log(err);
