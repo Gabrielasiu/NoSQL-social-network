@@ -102,7 +102,7 @@ module.exports = {
   async updateThoughts(req, res) {
     try {
       const thought = await Thought.findOneAndUpdate(
-        { _id: req.params.thoughtId },
+        { _id: req.params.thoughtsId },
         { $addToset: {thought: req.body.thoughtText }},
         { runValidators: true, new: true }
       );
