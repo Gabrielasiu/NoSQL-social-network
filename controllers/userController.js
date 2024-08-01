@@ -29,7 +29,7 @@ module.exports = {
 
       res.json({
         user,
-        userName: await User(req.body.userName),
+        userName: await User(req.body),
       });
     } catch (err) {
       console.log(err);
@@ -40,6 +40,7 @@ module.exports = {
   async createUser(req, res) {
     try {
       const userData = await User.create(req.body);
+      console.log(req.body)
       res.json(userData);
     } catch (err) {
       res.status(500).json(err);
